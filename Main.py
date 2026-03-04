@@ -10,7 +10,7 @@ from Dicegroup import DiceGroup
 if __name__ == "__main__":
     info = "Tryck 'Enter' för att kasta tärningarna. Välja vilka träningar du vill behålla 1 - 5. Om du vill avsluta skriv 'q': "
     dg = DiceGroup()
-    cap = 0
+    cap = 2
     while cap < 3:
         choice = input(info)
         if choice != "":
@@ -23,4 +23,5 @@ if __name__ == "__main__":
             info = "Välj vilka träningar du vill behålla: "
             cap += 1
         elif choice.lower() == 'q':
+
             break
