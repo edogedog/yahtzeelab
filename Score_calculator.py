@@ -44,6 +44,12 @@ def score_low_straight(h):
 def score_high_straight(h):
 
 def score_full_house(h):
+    i = h.index(3)
+    j = h.index(2)
+    if i>=0 and j>=:
+        result = 3 * (i+1) + 2 *(j+1)
+        return result
+        
 
 def score_chance(h):
 
@@ -67,3 +73,4 @@ fd = {
     "Chans": score_chance,
     "Yatzy": score_yatzy
 }
+
