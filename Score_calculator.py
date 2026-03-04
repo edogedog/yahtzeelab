@@ -47,12 +47,26 @@ print("Poäng för Sexor:", score_sixes(h))  # Förväntad output: 0
 
 
 def score_pair(h):
+    result = 0
+    if 2 in histogram:
+        result =  2 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    return result
 
 def score_two_pair(h):
 
+
 def score_three_of_a_kind(h):
+    result = 0
+    if 3 in histogram:
+        result =  3 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    return result
+    
 
 def score_four_of_a_kind(h):
+    result = 0
+    if 4 in histogram:
+        result =  4 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    return result
 
 def score_low_straight(h):
 
@@ -93,3 +107,4 @@ fd = {
     "Chans": score_chance,
     "Yatzy": score_yatzy
 }
+
