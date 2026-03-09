@@ -1,11 +1,11 @@
--- coding: utf-8 --
+# -*- coding: utf-8 -*-
 """
 Created on Mon Mar  2 13:39:22 2026
 
 @author: 24daai01
 """
 
-
+dielist = [5, 1, 4, 5, 3]
 
 dictlist = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
 
@@ -51,9 +51,11 @@ def score_sixes(h):
 
 def score_pair(h):
     result = 0
-    if 2 in histogram:
-        result =  2 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    if 2 in h:
+        result =  2 * (1 + h.index(3)) # 3 * det tärningsvärde som hittades tre av
     return result
+
+print("Poäng för 1 par: ", score_pair(h))
     
 
 def score_two_pair(h):
@@ -67,15 +69,15 @@ def score_two_pair(h):
 
 def score_three_of_a_kind(h):
     result = 0
-    if 3 in histogram:
-        result =  3 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    if 3 in h:
+        result =  3 * (1 + h.index(3)) # 3 * det tärningsvärde som hittades tre av
     return result
     
 
 def score_four_of_a_kind(h):
     result = 0
-    if 4 in histogram:
-        result =  4 * (1 + histogram.index(3)) # 3 * det tärningsvärde som hittades tre av
+    if 4 in h:
+        result =  4 * (1 + h.index(3)) # 3 * det tärningsvärde som hittades tre av
     return result
 
 def score_low_straight(h):
