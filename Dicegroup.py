@@ -11,12 +11,10 @@ class DiceGroup:
 
     def __init__(self, N=5):
         self.__Dice_list = [Dice() for _ in range(N)]
-    
    
     def roll(self):
         for d in self.__Dice_list:
             d.roll()
-
     
     def get_die(self, n):
         return self.__Dice_list[n%len(self.__Dice_list)]
@@ -29,6 +27,10 @@ class DiceGroup:
     def unhold(self, n):
         self.get_die(n).unhold()
 
-   
+
+    def values(self):
+        return[d.eyes for d in self.__Dice_list]   
+
+
     def __str__(self):
-        return ", ".join(map(str,self.__Dice_list))
+        return " ".join(map(str,self.__Dice_list))
