@@ -19,8 +19,10 @@ if __name__ == "__main__":
             break
 
         if choice != "":
+            choice_clean = choice.replace(" ", "")
             for ch in choice:
-                dg.hold(int(ch)-1)
+                if ch.isdigit():
+                    dg.hold(int(ch)-1)
             print(dg)
 
         if choice == "":
@@ -29,7 +31,7 @@ if __name__ == "__main__":
             info = "Välj vilka tärningar du vill behålla: "
             cap += 1
 
-    # När kastningen är klar: beräkna poäng
+
 values = dg.values()
 h = Score_calculator.histogram(values)
 
