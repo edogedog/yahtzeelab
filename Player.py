@@ -6,6 +6,7 @@ Created on Mon Mar  2 13:40:07 2026
 """
 
 def player_maker():
+    # Fråga antal spelare
     while True:
         try:
             antal = int(input("Hur många spelare ska spela? "))
@@ -20,6 +21,6 @@ def player_maker():
     player_list = []
     for i in range(antal):
         namn = input(f"Skriv namn på spelare {i+1}: ")
-        player_list.append({"namn": namn, "poang": 0})
+        player_list.append({"namn": namn})
 
     return player_list
