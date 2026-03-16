@@ -5,20 +5,11 @@ Created on Mon Mar  2 13:39:22 2026
 @author: 24daai01
 """
 
-
-def histogram(dielist):
-
-    dictlist = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
-
-    for i in dielist:
-        dictlist[i] += 1
-
-    return list(dictlist.values())
-
-
-
-
-
+def make_histogram(dice):
+    h = [0, 0, 0, 0, 0, 0]
+    for die in dice:
+        h[die - 1] += 1
+    return h
 
 
 def score_ones(h):
@@ -46,10 +37,10 @@ def score_sixes(h):
 
 
 def score_pair(h):
-    result = 0
-    if 2 in h:
-        result =  2 * (1 + h.index(2)) # 3 * det tärningsvärde som hittades tre av
-    return result
+    for i in range(5, -1, -1):
+        if h[i] >= 2:  
+            return (i + 1) * 2
+    return 0
 
 
 def score_two_pair(h):
@@ -66,7 +57,7 @@ def score_three_of_a_kind(h):
     for i in range(5, -1, -1):
         if h[i] >= 3:
             return 3 * (i + 1)
-        return 0
+    return 0
     
 
 
@@ -74,7 +65,7 @@ def score_four_of_a_kind(h):
     for i in range(5, -1, -1):
         if h[i] >= 4:
             return 4 * (i + 1)
-        return 0
+    return 0
 
 
 
@@ -123,8 +114,8 @@ fd = {
     "Fyror": score_fours,
     "Femmor": score_fives,
     "Sexor": score_sixes,
-    "1 par": score_pair,
-    "2 par": score_two_pair,
+    "Ett par": score_pair,
+    "Två par": score_two_pair,
     "Tretal": score_three_of_a_kind,
     "Fyrtal": score_four_of_a_kind,
     "Liten stege": score_low_straight,
@@ -135,7 +126,45 @@ fd = {
 }
 
 
-for key in fd.keys():
-    print("goat")
-    print(key, fd[key]([0,0,0,0,0,0]))    
 
+
+bestscore = 0
+bestfun = "none"
+worstscore = 0
+worstfun = "none"
+tally ={}
+
+
+
+
+dictlist = [1,1,1,1,1,0]
+
+for key in fd.keys():
+    point = fd[key](dictlist)
+    tally[key] = point
+    print(key, point)   
+    
+    if bestscore == 0 or point > bestscore:
+        bestfun,bestscore = key, point
+      
+    print(point)
+    if worstscore == 0 or ((point < worstscore) and (point != 0)):
+        worstfun = key
+        worstscore = point
+       
+    
+print(f"bestfun: {bestfun}\nbestscore: {bestscore}")
+print(f"worstfun: {worstfun}\nworstscore: {worstscore}") 
+
+
+
+for key, value in tally.items():
+    if (key != bestfun and value != bestscore)and(key != worstfun and value != worstscore)and (value>0):
+        print("mid: "+ key,str(value))
+    
+ 
+    
+    
+    
+    
+    
