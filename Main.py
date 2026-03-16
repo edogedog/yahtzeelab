@@ -11,10 +11,14 @@ from Player import player_maker
 
 if __name__ == "__main__":
     player_list = player_maker()  
+    
+
 
     for play in player_list:
+        playor = int(len(play))-1
+        playerid = str(playor)  
+        argument1 = playerid
         print(f"\nDet är {play['namn']}s tur!")
-
         dg = DiceGroup()
         cap = 0
         info = "Tryck 'Enter' för att kasta tärningarna: "
@@ -23,7 +27,6 @@ if __name__ == "__main__":
             choice = input(info)
 
             if choice.lower() == 'q':
-                print(f"{play['namn']} avbröt sin tur.")
                 break
 
             if choice != "":
