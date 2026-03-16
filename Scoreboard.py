@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  2 13:39:42 2026
 
-@author: 24daai01
-"""
+def make_empty_scoreboard(fd):
+    return {key: None for key in fd.keys()}
 
-scoreboard = {
-    "Ettor": None,
-    "Tvåor": None,
-    "Treor": None,
-    "Fyror": None,
-    "Femmor": None,
-    "Sexor": None,
-    "ett par": None,
-    "två par": None,
-    "Tretal": None,
-    "Fyrtal": None,
-    "Liten stege": None,
-    "Stor stege": None,
-    "Kåk": None,
-    "Chans": None,
-    "Yatzy": None
-}
+
+def create_playerboards(player_list, fd):
+    playerboards = {}
+
+    for play in player_list:
+        playerid = play["id"]
+        playerboards[playerid] = make_empty_scoreboard(fd)
+
+    return playerboards
+
+
+def print_scoreboard(playerboard, namn=""):
+    if namn != "":
+        print(f"\nScoreboard för {namn}:")
+    else:
+        print("\nScoreboard:")
+
+    for key, value in playerboard.items():
+        print(f"{key}: {value}")
