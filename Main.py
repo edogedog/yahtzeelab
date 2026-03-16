@@ -7,34 +7,38 @@ Created on Mon Mar  2 13:38:32 2026
 
 from Dicegroup import DiceGroup
 import Score_calculator
+from Player import player_maker
 
 if __name__ == "__main__":
-    info = "Tryck 'Enter' för att kasta tärningarna. Välja vilka tärningar du vill behålla (1-5). Om du vill avsluta skriv 'q': "
-    dg = DiceGroup()
-    cap = 0
-    while cap < 3:
-        choice = input(info)
+    player_list = player_maker()  
 
-        if choice.lower() == 'q':
-            break
+    for play in player_list:
+        print(f"\nDet är {play['namn']}s tur!")
 
-        if choice != "":
-            choice_clean = choice.replace(" ", "")
-            for ch in choice:
-                if ch.isdigit():
-                    dg.hold(int(ch)-1)
-            print(dg)
+        dg = DiceGroup()
+        cap = 0
+        info = "Tryck 'Enter' för att kasta tärningarna: "
 
-        if choice == "":
+        while cap < 3:
+            choice = input(info)
+
+            if choice.lower() == 'q':
+                print(f"{play['namn']} avbröt sin tur.")
+                break
+
+            if choice != "":
+                choice_clean = choice.replace(" ", "")
+                for ch in choice_clean:
+                    if ch.isdigit():
+                        dg.hold(int(ch)-1)
+                print("Efter att ha hållit tärningarna:", dg)
+
             dg.roll()
-            print(dg)
-            info = "Välj vilka tärningar du vill behålla: "
+            print("Efter kast:", dg)
+
             cap += 1
-
-
+            info = "Välj vilka tärningar du vill behålla (1-5) eller tryck Enter för att kasta igen: "
+            
 values = dg.values()
 h = Score_calculator.histogram(values)
-
-print("\nPoäng:")
-for category, func in Score_calculator.fd.items():
-    print(f"{category}: {func(h)}")
+poang = Score_calculator.score(h)
