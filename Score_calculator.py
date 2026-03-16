@@ -5,6 +5,7 @@ Created on Mon Mar  2 13:39:22 2026
 @author: 24daai01
 """
 
+
 def histogram(dielist):
 
     dictlist = {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
@@ -128,7 +129,7 @@ fd = {
 }
 
 
-def score(h):
+def score(h,argument1):
 
     bestscore = 0
     bestfun = "none"
@@ -140,7 +141,7 @@ def score(h):
     for key in fd.keys():
         point = fd[key](h)
         tally[key] = point
-        print(f"{key}: {point}\n")   
+        print(f"{key}: {point}")   
     
         if bestscore == 0 or point > bestscore:
             bestfun,bestscore = key, point
@@ -159,4 +160,5 @@ def score(h):
     for key, value in tally.items():
         if (key != bestfun and value != bestscore)and(key != worstfun and value != worstscore)and (value>0):
             print("mid: "+ key,str(value))
+            
     
