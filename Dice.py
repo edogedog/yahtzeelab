@@ -41,4 +41,3 @@ class Dice:
         return f"Die({self.__eyes:d})"
     
     eyes = property(get_eyes)
-
