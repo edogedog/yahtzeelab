@@ -28,7 +28,7 @@ def player_maker():
     player_list = []
 
     for i in range(antal_manniskor):
-        namn = input(f"Skriv namn på spelare {i+1}: ")
+        namn = input(f"Skriv namn på spelare {i+1}: ").title()
         player_list.append({
             "id": len(player_list),
             "namn": namn,
@@ -37,7 +37,7 @@ def player_maker():
         })
 
     for i in range(antal_botar):
-        namn = f"Robotpojken{i+1}"
+        namn = f"Bot_{i+1}"
         player_list.append({
             "id": len(player_list),
             "namn": namn,
