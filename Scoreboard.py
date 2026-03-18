@@ -56,4 +56,4 @@ def print_scoreboard(playerboard, namn=""):
             print(f"{key}: {value}")
 
     print(f"Bonus: {bonus_score(playerboard)}")
-    print(f"Total score: {total_score(playerboard)}")
+    print(f"Total poäng: {total_score(playerboard)}")
