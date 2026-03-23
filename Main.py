@@ -1,18 +1,18 @@
 # -*- coding: utf-8 -*-
+#importerar våra klasser
+from Dicegroup import DiceGroup #dicegroup skapar 5 tärningar
+import Score_calculator #lägger upp funktioner för poängalternativ, samt tar ut poäng
+import Scoreboard #skapar tombräda, lagrar spelarnas poäng
+from Player import player_maker #initierar spelare och botar
 
-from Dicegroup import DiceGroup
-import Score_calculator
-import Scoreboard
-from Player import player_maker
-
-
+#en funktion som checkar ifall alla spelare fyllt i sin information som namn men även poäng för deras turer
 def all_scoreboards_filled(playerboards):
     for board in playerboards.values():
         if None in board.values():
             return False
     return True
 
-
+#gör spelkare och gör roliga meddlanden
 if __name__ == "__main__":
     player_list = player_maker()
 
@@ -24,31 +24,34 @@ if __name__ == "__main__":
         welcome = f"{names[0]} och {names[1]}"
     else:
         welcome = ", ".join(names[:-1]) + " och " + names[-1]
-
-    print("\n----------------------------------")
-    print(f"Välkommen {welcome}!")
-    print("----------------------------------\n")
-
+        #här ärre mest bara grejer som hanterar ifall de typ är flera namn osv
+        
+    #här är ett kul meddelande som gör det lite fuint
+    print("\n/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n")
+    print(f"Välkomna {welcome}!\n")
+    print("\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n")
+    #spelarnas scoreboards samlas
     playerboards = Scoreboard.create_playerboards(player_list, Score_calculator.fd)
-
+    #en simpel loop här som checkar när det är nåns tur med hjälp av filled fucntionen
     while not all_scoreboards_filled(playerboards):
         for play in player_list:
             playerid = play["id"]
 
             if None not in playerboards[playerid].values():
                 continue
-
+            #kul meddelande för turer
             print("\n----------------------------------")
             print(f"Det är {play['namn']}s tur!")
             print("----------------------------------\n")
 
             dg = DiceGroup()
 
+            #första kastet körs direkt så man inte behöver trycka massa i onödan
             dg.roll()
             cap = 1
-            print("Första kastet är:", dg)
+            print("första kastet:", dg)
 
-            info = "Välj vilka tärningar du vill behålla (1-5) eller tryck 'Enter' för att kasta igen: "
+            info = "Välj vilka tärningar du vill behålla (1-5) eller tryck Enter för att kasta igen: "
 
             while cap < 3:
                 if play["bot"]:
@@ -58,9 +61,9 @@ if __name__ == "__main__":
                     continue
 
                 choice = input(info)
-
+                #q för att ge upp rundan
                 if choice.lower() == "q":
-                    print(f"{play['namn']} gav upp rundan.")
+                    print(f"{play['namn']} gav upp rundan")
                     break
 
                 if choice != "":
@@ -70,11 +73,11 @@ if __name__ == "__main__":
                             n = int(ch) - 1
                             if 0 <= n <= 4:
                                 dg.hold(n)
-                    print("Tärningarna du håller: ", dg)
+                    print("Efter att ha hållit tärningarna:", dg)
 
                 dg.roll()
                 cap += 1
-                print(f"kast {cap}:", dg)
+                print(f"Efter kast {cap}:", dg)
 
             values = dg.values()
 
@@ -91,68 +94,24 @@ if __name__ == "__main__":
 
             print(f"\n{play['namn']} fick {gained_points} poäng denna runda.")
             Scoreboard.print_scoreboard(playerboards[playerid], play["namn"])
-            print(f"{play['namn']} har nu totalt {play['poang']} poäng!")
+            print(f"{play['namn']} har nu totalt {play['poang']} poäng.")
+            #kul meddelande
+    print("\n\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/")
+    print("\nSLUTRESULTAT:")
+    print("\n/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\\/\n")
 
-    print("\n----------------------------------")
-    print(f"SLUTRESULTAT: {play['poang']}")
-    print("----------------------------------\n")
-
-    
+    #uppdatera totalscore en sista gång så bonus säkert räknas in korrekt
     for play in player_list:
         playerid = play["id"]
         play["poang"] = Scoreboard.total_score(playerboards[playerid])
-
-    ranking = sorted(player_list, key=lambda p: p["poang"], reverse=True)
-
-    placering = 1
-    for play in ranking:
-        print(play["namn"] + " - " + str(play["poang"]) + " poäng")
-        placering += 1
-
-    vinnare = ranking[0]
-    forlorare = ranking[-1]
-
-    print("\nFörsta plats: " + vinnare["namn"] + " - Vinnare med " + str(vinnare["poang"]) + " poäng")
-    print("Sista plats: " + forlorare["namn"] + " - Förlorare med " + str(forlorare["poang"]) + " poäng")
+    #gör en funktion  som hämtar poängen åt oss till rankingen
+    def get_score(p):
+        return p["poang"]
     
-    
-    spara = input("Vill du spara yatzy spelet i en textfil? ")
+    ranking = sorted(player_list, key=get_score, reverse=True)
+    #printar scores
+    for i, play in enumerate(ranking, start=1):
+        print(f"{i}. {play['namn']} - {play['poang']} poäng")
 
-    if spara.lower() == "ja":
-        with open("yatzy_spel.txt", "w") as fil:
-
-            fil.write("YATZY SPELRESULTAT\n")
-            fil.write("----------------------\n\n")
-
-        
-            for play in player_list:
-                playerid = play["id"]
-
-                fil.write("Spelare: " + play["namn"] + "\n\n")
-                fil.write("----------------------\n")
-
-                board = playerboards[playerid]
-
-                for kategori in board:
-                    poang = board[kategori]
-                    poang_text = str(poang) if poang is not None else "-"
-                    fil.write(kategori + ": " + poang_text + "\n")
-
-                total = Scoreboard.total_score(board)
-                fil.write("TOTAL: " + str(total) + " poäng\n\n")
-
-        
-            fil.write("SLUTRESULTAT FÖR OMGÅNGEN\n")
-            fil.write("----------------------\n")
-
-            placering = 1
-            for play in ranking:
-                rad = str(placering) + ". " + play["namn"] + " - " + str(play["poang"]) + " poäng\n"
-                fil.write(rad)
-                placering += 1
-
-            vinnare = ranking[0]
-            fil.write("\nVinnare: " + vinnare["namn"] + "\n")
-            print("SPELRESULTATET ÄR UTSKRIVEN I TEXTFILEN 'yatzy_spel.txt'")
-    else:
-        print("Tack för att du spelade yatzy!")
+    print(f"\nFörsta plats: {ranking[0]['namn']} - WINNARE med {ranking[0]['poang']} poäng")
+    print(f"Sista plats: {ranking[-1]['namn']} - FÖRLORARE med {ranking[-1]['poang']} poäng")
