@@ -41,7 +41,7 @@ def score_pair(h):
             return (i + 1) * 2
     return 0
 
-
+#score 2 pairs, en pair variabel görs och en loop så att vi kan tracka 2 par
 def score_two_pair(h):
     pairs = []
     for i in range(5, -1, -1):
