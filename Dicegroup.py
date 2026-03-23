@@ -4,9 +4,9 @@ Created on Mon Mar  2 14:35:40 2026
 
 @author: 24daai01
 """
-
+#IMPORTERAR TÄRNINGNE FRÅN TÄRNINGNEN
 from Dice import Dice
-
+#KLASS DICEGROUP JA TACK!
 class DiceGroup:
 
     def __init__(self, N=5):
@@ -31,6 +31,6 @@ class DiceGroup:
     def values(self):
         return[d.eyes for d in self.__Dice_list]   
 
-
+    #join
     def __str__(self):
         return " ".join(map(str,self.__Dice_list))
