@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 
-#Skapar histogram för att se värdet på varje träning som kastas och sparar det i en list
+#Skapar histogram för att se värdet på varje träning som kastas och sparar det i en lista
 def make_histogram(dice):
     h = [0, 0, 0, 0, 0, 0]
     for die in dice:
         h[die - 1] += 1
     return h
 
-#Enkal funktioner, kollar på index 0, det ettor representerar
+#Enkala funktioner. Kollar på index 0, det ettor representerar
 #Muliplicerar det med 1
 def score_ones(h):
     return h[0] * 1
@@ -33,7 +33,7 @@ def score_fives(h):
 def score_sixes(h):
     return h[5] * 6
 
-#Lite mer avancerad poängsystem. börjar på index 5 och går baklängs
+#Lite mer avancerad poängsystem. Börjar på index 5 och går baklängs
 #Detta görs för att hitta bästa möjliga poängmässiga paret
 def score_pair(h):
     for i in range(5, -1, -1):
@@ -41,7 +41,7 @@ def score_pair(h):
             return (i + 1) * 2
     return 0
 
-#score 2 pairs, en pair variabel görs och en loop så att vi kan tracka 2 par
+
 def score_two_pair(h):
     pairs = []
     for i in range(5, -1, -1):
@@ -121,8 +121,8 @@ fd = {
 
 
 #Vi använder oss av histogram funktionen
-#Loopar genom alla kateogirer i fd. Om ej vald förblir kategorin none
-#De lediga kategorierna checkas beräknas med fd[key](h)
+#Loopar genom alla kateogirer i fd. Om ej vald förblir kategorin None
+#De lediga kategorierna checkas och beräknas med fd[key](h)
 #Loopar genom varje ledig kategri och använder sig av funktionerna för att visa poängen
 def get_available_scores(values, playerid, playerboards):
     h = make_histogram(values)
@@ -138,16 +138,16 @@ def get_available_scores(values, playerid, playerboards):
 def choose_score_human(values, playerid, playerboards):
     tally = get_available_scores(values, playerid, playerboards)
     
-#Vissar spelaren vad som finns att väljas
+#Vissar spelaren vad som finns att välja
     print("\nValbara kategorier:")
     for key, value in tally.items():
         print(f"{key}: {value}")
 
     while True:
-        choice = input("Vilken kategori vill du välja? ").strip()
+        choice = input("Lägg in din poäng på en kategori: ").strip()
 
 #Gör det case - sensitive så att spelaren kan skriva "ett par", "ETT PAR" och "EtT PaR"
-#Vi gör även key till små bokstäver så det matchar vad användaren skrev
+#Vi gör även key till små bokstäver så det matchar med vad användaren skrev
         for key in tally:
             if key.lower() == choice.lower():
                 playerboards[playerid][key] = tally[key]
@@ -159,15 +159,15 @@ def choose_score_human(values, playerid, playerboards):
 
 #Hämtar återigen funktionen som är ligger lite över
 #Boten är enkel och väljer bara det värde på träningar som ger mest poäng
-#boten kan varken hålla eller tänka vad som är bäst eller strycka under någon kategori. Simpel och rakt på sak
+#Boten kan varken hålla eller tänka vad som är bäst. Simpel och rakt på sak
 def choose_score_bot(values, playerid, playerboards, namn):
     tally = get_available_scores(values, playerid, playerboards)
 
     best_key = None
     best_value = -1
 
-#Checkar det bästa värdet efter alla tre kasen boten gör
-#Lägger  det bästa värdet i best_value (poängen) och best_key får själva kategorinamnet 
+#Checkar det bästa värdet efter alla tre kasen
+#Lägger  det bästa värdet i best_value (poängen) och best_key för själva kategorinamnet 
     for key, value in tally.items():
         if value > best_value:
             best_value = value
