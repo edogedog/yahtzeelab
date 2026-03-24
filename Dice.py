@@ -4,9 +4,11 @@ Created on Mon Mar  2 13:39:13 2026
 
 @author: 24daai01
 """
-#importerar random modulen så att vi kan ha slumpmässigt val då python egentligen inte har dedt inbyggt
+#Importerar random modulen så att vi kan ha slumpmässigt val då python egentligen inte har dedt inbyggt
 import random
-#här gör vi våran tärning
+
+
+#Här gör vi våran tärning
 class Dice:
     
     def __init__(self):
