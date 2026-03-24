@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 
 #Här skapas en tom "spelbräda" för varje spelare och bot som ska spela
-#Alla kategorier sätts till None
+#Alla kategorier blir None
 def make_empty_scoreboard(fd):
     return {key: None for key in fd.keys()}
 
 
-#Här så blir varje spelare signerad sitt tomma spelbärda
-#Notera att funktionen över gjorde endast en spelbärda som är tom
-#Medan denna signerar den tomma spelbrädan till repsktive spelare och bot
+#Här blir varje spelare signerad sin tomma spelbärda
+#Notering, funktionen över gjorde endast att spelbärda blev tom
+#Medan denna funktion signerar den tomma spelbrädan till repsktive spelare
 def create_playerboards(player_list, fd):
     playerboards = {}
 
@@ -39,7 +39,7 @@ def bonus_score(playerboard):
         return 50
     return 0
 
-#Räknar bara ihop alla poäng för allt med bonusen inkluderad
+
 def total_score(playerboard):
     total = 0
 
@@ -52,23 +52,20 @@ def total_score(playerboard):
     return total
 
 
-#Gör det bara snyggt genom att skriva vemas spelbärda är vems
-#Skriver ut spelbrädan oavsett om man inte har något namn (Man kan vill vara anonym)
+#Gör det snyggt genom att skriva vems spelbärda är vems
+#Skriver ut spelbrädan oavsett om man inte har något namn (Man kanske vill vara anonym)
 def print_scoreboard(playerboard, namn):
     if namn != "":
-        print(f"\nScoreboard för {namn}:")
+        print(f"\nSpelbräda för {namn}:")
     else:
-        print("\nScoreboard:")
+        print("\nSpelbräda:")
 
-#Loopar igenom alla kategorier i spelbrädan och om de är none så blir det en utskrift på "Ej vald"
-#Om den är vald så skriva kategorin ut samt värdet på den kategorin
+#Loopar igenom alla kategorier i spelbrädan och om de är None så blir det en utskrift på "Ej vald"
+#Om den är vald så skrivs kategorin ut samt värdet på den kategorin
     for key, value in playerboard.items():
         if value is None:
             print(f"{key}: Ej vald")
         else:
             print(f"{key}: {value}")
 
-#Här så checkas bara om bonus poängen har blivit tillagd eller inte, för snyggheten skull
     print(f"Bonus: {bonus_score(playerboard)}")
-#Visar total poängen efter varje omgång så spelaren vet utan att behöva räkna sjävl sitt totala poäng
-    print(f"Total poäng: {total_score(playerboard)}")
