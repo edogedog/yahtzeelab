@@ -4,8 +4,11 @@ Created on Mon Mar  2 14:35:40 2026
 
 @author: 24daai01
 """
-#IMPORTERAR TÄRNINGNE FRÅN TÄRNINGNEN
+
+#Importerar tärningen in till tärningar
 from Dice import Dice
+
+
 #KLASS DICEGROUP JA TACK!
 class DiceGroup:
 
